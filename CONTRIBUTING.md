@@ -1,30 +1,30 @@
 ---
-ms.openlocfilehash: fbd3e506358aa4be60dfe3891b50085691f7443a
-ms.sourcegitcommit: 9d0d10a9e8e5a1d80382d89bc412df287bee03f3
+ms.openlocfilehash: bc39e84debe100762908cda81d2ba8685769aaee
+ms.sourcegitcommit: 3ee5ced77209775eb5e744f68c9235bad8ec2bf4
 ms.translationtype: MT
 ms.contentlocale: fr-FR
-ms.lasthandoff: 10/30/2020
-ms.locfileid: "48822340"
+ms.lasthandoff: 01/21/2021
+ms.locfileid: "49919542"
 ---
 # <a name="contributing-to-microsoft-graph-training-repositories"></a>Contribution aux référentiels de formation Microsoft Graph
 
-Merci d’avoir contribué à ce projet ! Avant d’envoyer votre requête de tirage, veillez à prendre en compte les points suivants.
+Merci d’avoir contribué à ce projet ! Avant d’envoyer votre requête de pull, veillez à prendre en compte les considérations suivantes.
 
 ## <a name="overview"></a>Vue d’ensemble
 
-Le code de ce référentiel répond à trois objectifs :
+Le code de ce référentiel sert à trois fins :
 
-- Les fichiers de démarque dans le dossier [Tutorial](/tutorial) sont publiés sous la forme d’un didacticiel sur la page des [didacticiels Microsoft Graph](https://docs.microsoft.com/graph/tutorials) .
-- L’exemple de projet dans le dossier [Demo](/demo) est la source pour un [démarrage rapide de Microsoft Graph](https://developer.microsoft.com/graph/quick-start). * *\** _
-- L’exemple de projet dans le dossier Demo est également téléchargeable directement auprès de GitHub et doit être exécuté en l’après d’une configuration simple.
+- Les fichiers Markdown du dossier [didacticiel](/tutorial) sont publiés en tant que didacticiels sur la page de [didacticiels Microsoft Graph.](https://docs.microsoft.com/graph/tutorials)
+- L’exemple de projet dans le dossier [de](/demo) démonstration est la source d’un démarrage [rapide Microsoft Graph](https://developer.microsoft.com/graph/quick-start).* *\** _
+- L’exemple de projet dans le dossier de démonstration est également téléchargeable directement à partir de GitHub et doit s’exécuter tel qu’il se doit après une configuration simple.
 
-> _*\**_ Tous les référentiels d’apprentissage ne sont pas disponibles en tant que Démarrages rapides (encore).
+> _*\**_ Tous les référentiels de formation ne sont pas disponibles en tant que démarrages rapides (encore).
 
-Ceci est important à garder à l’esprit, car les modifications apportées à un emplacement _may * nécessitent des modifications dans un autre, pour maintenir la synchronisation. Whereever possible, les fichiers de démarque font référence directement aux fichiers de code source (à l’aide d’une `:::code` syntaxe personnalisée), de sorte que la mise à jour du code de la source met automatiquement à jour le code dans la démarque.
+Il est important de garder à l’esprit que les modifications apportées à un endroit _may* nécessitent des modifications dans un autre, pour maintenir la synchronisation. Dans la mesure du possible, les fichiers Markdown font référence aux fichiers de code source directement (à l’aide d’une syntaxe personnalisée), afin que la mise à jour du code dans la source met automatiquement à jour le code dans `:::code` Markdown.
 
 ## <a name="updating-code"></a>Mise à jour du code
 
-La `:::code` syntaxe utilisée dans la démarque dépend de commentaires spécifiques dans le fichier de code source. Ces commentaires ressemblent à ce qui suit :
+La `:::code` syntaxe utilisée dans Markdown dépend de commentaires spécifiques dans le fichier de code source. Ces commentaires ressemblent à ce qui suit :
 
 ```csharp
 // <MySnippet>
@@ -32,19 +32,19 @@ Console.WriteLine("Hello World!");
 // </MySnippet>
 ```
 
-Si vous mettez à jour le code entre ces commentaires « marque », les fichiers de démarque reçoivent automatiquement ces modifications lorsqu’elles sont publiées sur le site de documentation Microsoft Graph. Si vous mettez à jour le code en dehors de ces commentaires, il est fort probable que vous devez mettre à jour la démarque correspondante.
+Si vous mettez à jour le code entre ces commentaires « marqueurs », les fichiers Markdown obtiennent automatiquement ces modifications lorsqu’ils sont publiés sur le site de documentation de Microsoft Graph. Si vous mettez à jour le code en dehors de ces commentaires, il est très probable que vous devrez mettre à jour le Markdown correspondant.
 
 ## <a name="adding-features"></a>Ajout de fonctionnalités
 
-Bien que l’enthousiasme soit apprécié, n’envoyez pas de demandes d’extraction pour ajouter de nouvelles fonctionnalités à l’exemple. Étant donné que ce référentiel est principalement un didacticiel de création de votre première application, le jeu de fonctionnalités est limité, par conception.
+Bien que l’enthousiasme soit satisfait, n’envoyez pas de demandes de pull pour ajouter de nouvelles fonctionnalités à l’exemple. Étant donné que ce référentiel est principalement un didacticiel « Créer votre première application », l’ensemble des fonctionnalités est limité, de par sa conception.
 
-## <a name="submitting-pull-requests"></a>Envoi de demandes de tirage
+## <a name="submitting-pull-requests"></a>Envoi de demandes de pull
 
-Envoyez toutes les requêtes de tirage à la `master` succursale.
+Veuillez envoyer toutes les demandes de pull à la `main` branche.
 
-## <a name="when-do-changes-get-published"></a>Quand les modifications sont-elles publiées ?
+## <a name="when-do-changes-get-published"></a>Quand les modifications sont-elles publiées ?
 
-La publication de mises à jour sur le site de [didacticiels Microsoft Graph](https://docs.microsoft.com/graph/tutorials) n’est pas automatique. Les modifications doivent d’abord être promues vers la `live` succursale, puis une build doit être déclenchée par les administrateurs du site. Cette opération est généralement réalisée en fonction des besoins.
+La publication des mises à jour sur le site [de didacticiels Microsoft Graph](https://docs.microsoft.com/graph/tutorials) n’est pas automatique. Les modifications doivent d’abord être promues dans la branche, puis une build doit `live` être déclenchée par les administrateurs du site. Cette fonction est généralement effectuée « selon les besoins ».
 
 ## <a name="code-of-conduct"></a>Code de conduite
 
