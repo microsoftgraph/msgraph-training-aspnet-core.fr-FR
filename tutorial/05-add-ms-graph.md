@@ -1,18 +1,18 @@
 ---
-ms.openlocfilehash: 17394dd6283464eabcbea1f60c48640412b55431
-ms.sourcegitcommit: 9d0d10a9e8e5a1d80382d89bc412df287bee03f3
+ms.openlocfilehash: c954903f38d48bcca4c534f4d0cfbe1605cbf7f6
+ms.sourcegitcommit: 6341ad07cd5b03269e7fd20cd3212e48baee7c07
 ms.translationtype: MT
 ms.contentlocale: fr-FR
-ms.lasthandoff: 10/30/2020
-ms.locfileid: "48822380"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "49942147"
 ---
 <!-- markdownlint-disable MD002 MD041 -->
 
-Dans cette section, vous allez incorporer Microsoft Graph dans l’application. Pour cette application, vous allez utiliser la [bibliothèque cliente Microsoft Graph pour .net](https://github.com/microsoftgraph/msgraph-sdk-dotnet) pour effectuer des appels à Microsoft Graph.
+Dans cette section, vous allez incorporer Microsoft Graph dans l’application. Pour cette application, vous allez utiliser la bibliothèque [cliente Microsoft Graph pour .NET](https://github.com/microsoftgraph/msgraph-sdk-dotnet) pour effectuer des appels à Microsoft Graph.
 
 ## <a name="get-calendar-events-from-outlook"></a>Récupérer les événements de calendrier à partir d’Outlook
 
-Commencez par créer un nouveau contrôleur pour les affichages de calendrier.
+Commencez par créer un contrôleur pour les affichages calendrier.
 
 1. Ajoutez un nouveau fichier nommé **CalendarController.cs** dans le répertoire **./Controllers** et ajoutez le code suivant.
 
@@ -49,14 +49,14 @@ Commencez par créer un nouveau contrôleur pour les affichages de calendrier.
 
     :::code language="csharp" source="../demo/GraphTutorial/Controllers/CalendarController.cs" id="GetCalendarViewSnippet":::
 
-    Examinez le contenu du code `GetUserWeekCalendar` .
+    Réfléchissez à ce que fait le `GetUserWeekCalendar` code.
 
     - Il utilise le fuseau horaire de l’utilisateur pour obtenir les valeurs de date/heure de début et de fin UTC de la semaine.
-    - Il interroge l' [affichage Calendrier](/graph/api/calendar-list-calendarview?view=graph-rest-1.0) de l’utilisateur pour obtenir tous les événements compris entre les dates de début et de fin. L’utilisation d’un affichage Calendrier au lieu de [répertorier les événements](/graph/api/user-list-events?view=graph-rest-1.0) développe les événements périodiques, en renvoyant les occurrences qui se produisent dans la fenêtre de temps spécifiée.
-    - Il utilise l' `Prefer: outlook.timezone` en-tête pour récupérer les résultats dans le fuseau horaire de l’utilisateur.
-    - Il utilise `Select` pour limiter les champs qui reviennent à ceux utilisés par l’application.
-    - Il est utilisé `OrderBy` pour trier les résultats par ordre chronologique.
-    - Il utilise une `PageIterator` [page to via la collection Events](/graph/sdks/paging). Cela gère le cas où l’utilisateur dispose d’un plus grand nombre d’événements sur son calendrier que la taille de page demandée.
+    - Elle interroge l’affichage [](/graph/api/calendar-list-calendarview?view=graph-rest-1.0) Calendrier de l’utilisateur pour obtenir tous les événements se s’erdant entre la date et l’heure de début et de fin. L’utilisation d’un [](/graph/api/user-list-events?view=graph-rest-1.0) affichage Calendrier au lieu de répertorier des événements développe les événements périodiques, renvoyant toutes les occurrences qui se produisent dans la fenêtre de temps spécifiée.
+    - Il utilise `Prefer: outlook.timezone` l’en-tête pour obtenir les résultats dans le fuseau horaire de l’utilisateur.
+    - Il permet de limiter les champs qui reviennent uniquement à ceux `Select` utilisés par l’application.
+    - Il utilise `OrderBy` pour trier les résultats dans l’ordre chronologique.
+    - Il utilise une `PageIterator` page à travers la collection [d’événements.](/graph/sdks/paging) Cela gère le cas où l’utilisateur a plus d’événements sur son calendrier que la taille de page demandée.
 
 1. Ajoutez la fonction suivante à la `CalendarController` classe pour implémenter une vue temporaire des données renvoyées.
 
@@ -84,7 +84,7 @@ Commencez par créer un nouveau contrôleur pour les affichages de calendrier.
         {
             if (ex.InnerException is MicrosoftIdentityWebChallengeUserException)
             {
-                throw ex;
+                throw;
             }
 
             return new ContentResult {
@@ -115,21 +115,21 @@ Vous pouvez désormais ajouter une vue pour afficher les résultats de façon pl
 
     :::code language="csharp" source="../demo/GraphTutorial/Models/CalendarViewModel.cs" id="CalendarViewModelSnippet":::
 
-### <a name="create-views"></a>Créer des vues
+### <a name="create-views"></a>Créer des affichages
 
-1. Créez un répertoire nommé **calendrier** dans le répertoire **./views** .
+1. Créez un répertoire nommé **Calendrier** dans le répertoire **./Views.**
 
-1. Créez un fichier nommé **_DailyEventsPartial. cshtml** dans le répertoire **./views/Calendar** et ajoutez le code suivant.
+1. Créez un fichier nommé **_DailyEventsPartial.cshtml** dans le répertoire **./Views/Calendar** et ajoutez le code suivant.
 
     :::code language="cshtml" source="../demo/GraphTutorial/Views/Calendar/_DailyEventsPartial.cshtml" id="DailyEventsPartialSnippet":::
 
-1. Créez un fichier nommé **index. cshtml** dans le répertoire **./views/Calendar** et ajoutez le code suivant.
+1. Créez un fichier nommé **Index.cshtml** dans le répertoire **./Views/Calendar** et ajoutez le code suivant.
 
     :::code language="cshtml" source="../demo/GraphTutorial/Views/Calendar/Index.cshtml" id="CalendarIndexSnippet":::
 
 ### <a name="update-calendar-controller"></a>Mettre à jour le contrôleur de calendrier
 
-1. Ouvrez **./Controllers/CalendarController.cs** et remplacez la `Index` fonction existante par ce qui suit.
+1. Ouvrez **./Controllers/CalendarController.cs** et remplacez la fonction `Index` existante par ce qui suit.
 
     :::code language="csharp" source="../demo/GraphTutorial/Controllers/CalendarController.cs" id="IndexSnippet":::
 

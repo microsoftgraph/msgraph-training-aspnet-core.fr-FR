@@ -1,23 +1,23 @@
 ---
-ms.openlocfilehash: 6e6c476b4ff0901f50d8e35a17f584d73b48b533
-ms.sourcegitcommit: 9d0d10a9e8e5a1d80382d89bc412df287bee03f3
+ms.openlocfilehash: a024fb533c552563da6c9179301e16a2e1d09d5f
+ms.sourcegitcommit: 6341ad07cd5b03269e7fd20cd3212e48baee7c07
 ms.translationtype: MT
 ms.contentlocale: fr-FR
-ms.lasthandoff: 10/30/2020
-ms.locfileid: "48822361"
+ms.lasthandoff: 01/23/2021
+ms.locfileid: "49942161"
 ---
 <!-- markdownlint-disable MD002 MD041 -->
 
-Dans cet exercice, vous allez étendre l’application de l’exercice précédent pour prendre en charge l’authentification avec Azure AD. Cette opération est obligatoire pour obtenir le jeton d’accès OAuth nécessaire pour appeler l’API Microsoft Graph. Dans cette étape, vous allez configurer la bibliothèque [Microsoft. Identity. Web](https://www.nuget.org/packages/Microsoft.Identity.Web/) .
+Dans cet exercice, vous allez étendre l’application de l’exercice précédent pour prendre en charge l’authentification avec Azure AD. Cette opération est obligatoire pour obtenir le jeton d’accès OAuth nécessaire pour appeler l’API Microsoft Graph. Dans cette étape, vous allez configurer la [bibliothèque Microsoft.Identity.Web.](https://www.nuget.org/packages/Microsoft.Identity.Web/)
 
 > [!IMPORTANT]
-> Pour éviter le stockage de l’ID et de la clé secrète de l’application dans la source, utilisez le [Gestionnaire de secret .net](/aspnet/core/security/app-secrets) pour stocker ces valeurs. Le gestionnaire de secrets est destiné uniquement à des fins de développement, les applications de production doivent utiliser un gestionnaire de secret approuvé pour le stockage de secrets.
+> Pour éviter de stocker l’ID d’application et la secret dans la source, vous utiliserez [.NET Secret Manager](/aspnet/core/security/app-secrets) pour stocker ces valeurs. Le Gestionnaire de secret est uniquement à des fins de développement, les applications de production doivent utiliser un gestionnaire de secret approuvé pour stocker les secrets.
 
-1. Ouvrez **./appsettings.jssur** et remplacez son contenu par ce qui suit.
+1. Ouvrez **./appsettings.jset** remplacez son contenu par ce qui suit.
 
     :::code language="json" source="../demo/GraphTutorial/appsettings.json" highlight="2-6":::
 
-1. Ouvrez la CLI dans le répertoire où se trouve **GraphTutorial. csproj** , puis exécutez les commandes suivantes, en remplaçant `YOUR_APP_ID` votre ID d’application dans le portail Azure, et `YOUR_APP_SECRET` votre clé d’application secrète.
+1. Ouvrez votre CLI dans le répertoire où se trouve **GraphTutorial.csproj,** puis exécutez les commandes suivantes, en remplaçant votre ID d’application par le portail Azure et votre `YOUR_APP_ID` secret d’application. `YOUR_APP_SECRET`
 
     ```Shell
     dotnet user-secrets init
@@ -27,13 +27,13 @@ Dans cet exercice, vous allez étendre l’application de l’exercice précéde
 
 ## <a name="implement-sign-in"></a>Implémentation de la connexion
 
-Commencez par ajouter les services de plateforme d’identité Microsoft à l’application.
+Commencez par ajouter les services de plateforme Microsoft Identity à l’application.
 
 1. Créez un fichier nommé **GraphConstants.cs** dans le répertoire **./Graph** et ajoutez le code suivant.
 
     :::code language="csharp" source="../demo/GraphTutorial/Graph/GraphConstants.cs" id="GraphConstantsSnippet":::
 
-1. Ouvrez le fichier **./Startup.cs** et ajoutez les `using` instructions suivantes en haut du fichier.
+1. Ouvrez **le fichier ./Startup.cs** et ajoutez les `using` instructions suivantes en haut du fichier.
 
     ```csharp
     using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -154,43 +154,43 @@ Commencez par ajouter les services de plateforme d’identité Microsoft à l’
 
 1. Examinez l’invite de consentement. La liste des autorisations correspond à la liste des étendues d’autorisations configurées dans **./Graph/GraphConstants.cs**.
 
-    - **Conserver l’accès aux données auxquelles vous avez accordé l’accès à :** ( `offline_access` ) cette autorisation est demandée par MSAL afin de récupérer les jetons d’actualisation.
-    - **Connectez-vous et lisez votre profil :** ( `User.Read` ) cette autorisation permet à l’application d’obtenir le profil de l’utilisateur connecté et sa photo de profil.
-    - **Lire les paramètres de votre boîte aux lettres :** ( `MailboxSettings.Read` ) cette autorisation permet à l’application de lire les paramètres de boîte aux lettres de l’utilisateur, notamment le fuseau horaire et le format de l’heure.
-    - **Avoir un accès total à vos calendriers :** ( `Calendars.ReadWrite` ) cette autorisation permet à l’application de lire des événements sur le calendrier de l’utilisateur, d’ajouter de nouveaux événements et de modifier des événements existants.
+    - **Conservez l’accès aux** données à qui vous avez accordé l’accès : ( ) Cette autorisation est demandée par MSAL afin de récupérer les jetons `offline_access` d’actualisation.
+    - **Connectez-vous et lisez votre** profil : ( ) Cette autorisation permet à l’application d’obtenir le profil et la photo de profil de `User.Read` l’utilisateur connecté.
+    - **Lisez les paramètres de votre** boîte aux lettres : ( ) Cette autorisation permet à l’application de lire les paramètres de boîte aux lettres de l’utilisateur, y compris le fuseau horaire et `MailboxSettings.Read` le format horaire.
+    - **Avoir un accès total à** vos calendriers : ( ) Cette autorisation permet à l’application de lire des événements sur le calendrier de l’utilisateur, d’ajouter de nouveaux événements et de modifier des `Calendars.ReadWrite` événements existants.
 
-    ![Capture d’écran de l’invite de consentement de la plateforme d’identité Microsoft](./images/add-aad-auth-03.png)
+    ![Capture d’écran de l’invite de consentement de la plateforme d’identités Microsoft](./images/add-aad-auth-03.png)
 
-    Pour plus d’informations sur le consentement, consultez la rubrique [Understanding Azure ad Presentation Experience](/azure/active-directory/develop/application-consent-experience).
+    Pour plus d’informations sur le consentement, voir [Comprendre les expériences de consentement d’application Azure AD.](/azure/active-directory/develop/application-consent-experience)
 
-1. Consentement des autorisations demandées. Le navigateur vous redirige vers l’application, affichant le jeton.
+1. Consentement aux autorisations demandées. Le navigateur vous redirige vers l’application, affichant le jeton.
 
 ### <a name="get-user-details"></a>Obtenir les détails de l’utilisateur
 
 Une fois que l’utilisateur a ouvert une session, vous pouvez obtenir ses informations à partir de Microsoft Graph.
 
-1. Ouvrez **./Graph/GraphClaimsPrincipalExtensions.cs** et remplacez l’intégralité de son contenu par ce qui suit.
+1. Ouvrez **./Graph/GraphClaimsPrincipalExtensions.cs** et remplacez tout son contenu par ce qui suit.
 
     :::code language="csharp" source="../demo/GraphTutorial/Graph/GraphClaimsPrincipalExtensions.cs" id="GraphClaimsExtensionsSnippet":::
 
-1. Ouvrez **./Startup.cs** et remplacez la `.AddMicrosoftIdentityWebApp(Configuration)` ligne existante par le code suivant.
+1. Ouvrez **./Startup.cs** et remplacez la ligne `.AddMicrosoftIdentityWebApp(Configuration)` existante par le code suivant.
 
     :::code language="csharp" source="../demo/GraphTutorial/Startup.cs" id="AddSignInSnippet":::
 
-    Examinez ce que fait ce code.
+    Considérez ce que fait ce code.
 
-    - Il ajoute un gestionnaire d’événements pour l' `OnTokenValidated` événement.
-        - Il utilise l' `ITokenAcquisition` interface pour obtenir un jeton d’accès.
+    - Il ajoute un handler d’événements pour `OnTokenValidated` l’événement.
+        - Il utilise `ITokenAcquisition` l’interface pour obtenir un jeton d’accès.
         - Il appelle Microsoft Graph pour obtenir le profil et la photo de l’utilisateur.
-        - Il ajoute les informations de graphique à l’identité de l’utilisateur.
+        - Il ajoute les informations Graph à l’identité de l’utilisateur.
 
-1. Ajoutez l’appel de fonction suivant après l' `EnableTokenAcquisitionToCallDownstreamApi` appel et avant l' `AddInMemoryTokenCaches` appel.
+1. Ajoutez l’appel de fonction suivant après `EnableTokenAcquisitionToCallDownstreamApi` l’appel et avant `AddInMemoryTokenCaches` l’appel.
 
     :::code language="csharp" source="../demo/GraphTutorial/Startup.cs" id="AddGraphClientSnippet":::
 
-    Cela rendra un **GraphServiceClient** authentifié accessible aux contrôleurs via l’injection de dépendance.
+    Cela rend un **GraphServiceClient** authentifié disponible pour les contrôleurs via l’injection de dépendance.
 
-1. Ouvrez **./Controllers/HomeController.cs** et remplacez la `Index` fonction par ce qui suit.
+1. Ouvrez **./Controllers/HomeController.cs** et remplacez `Index` la fonction par ce qui suit.
 
     ```csharp
     public IActionResult Index()
@@ -199,26 +199,29 @@ Une fois que l’utilisateur a ouvert une session, vous pouvez obtenir ses infor
     }
     ```
 
-1. Supprimez toutes les références à `ITokenAcquisition` dans la classe **HomeController** .
+1. Supprimez toutes les références `ITokenAcquisition` à la **classe HomeController.**
 
-1. Enregistrez vos modifications, démarrez l’application et parcourez le processus de connexion. Vous devez revenir sur la page d’accueil, mais l’interface utilisateur doit changer pour indiquer que vous êtes connecté.
+1. Enregistrez vos modifications, démarrez l’application et traversez le processus de signature. Vous devez revenir sur la page d’accueil, mais l’interface utilisateur doit changer pour indiquer que vous êtes bien inscrit.
 
     ![Capture d’écran de la page d’accueil après la connexion](./images/add-aad-auth-01.png)
 
-1. Cliquez sur Avatar de l’utilisateur dans le coin supérieur droit pour accéder au lien **déconnexion** . Le fait de cliquer sur **Se déconnecter** réinitialise la session et vous ramène à la page d’accueil.
+1. Cliquez sur l’avatar de l’utilisateur dans le coin supérieur droit pour accéder au lien **de** connexion. Le fait de cliquer sur **Se déconnecter** réinitialise la session et vous ramène à la page d’accueil.
 
     ![Capture d’écran du menu déroulant avec le lien de déconnexion](./images/add-aad-auth-02.png)
 
+> [!TIP]
+> Si vous ne voyez pas votre nom d’utilisateur sur la page d’accueil et que le nom et l’e-mail de l’avatar d’utilisation sont manquants après avoir apporté ces modifications, dé connectez-vous et connectez-vous.
+
 ## <a name="storing-and-refreshing-tokens"></a>Stockage et actualisation des jetons
 
-À ce stade, votre application a un jeton d’accès, qui est envoyé dans l' `Authorization` en-tête des appels d’API. Il s’agit du jeton qui permet à l’application d’accéder à Microsoft Graph pour le compte de l’utilisateur.
+À ce stade, votre application dispose d’un jeton d’accès, qui est envoyé dans l’en-tête des `Authorization` appels d’API. Il s’agit du jeton qui permet à l’application d’accéder à Microsoft Graph pour le compte de l’utilisateur.
 
 Cependant, ce jeton est de courte durée. Le jeton expire une heure après son émission. C’est là que le jeton d’actualisation devient utile. Le jeton d’actualisation permet à l’application de demander un nouveau jeton d’accès sans obliger l’utilisateur à se reconnecter.
 
-Étant donné que l’application utilise la bibliothèque Microsoft. Identity. Web, vous n’avez pas besoin d’implémenter de logique d’actualisation ou de stockage de jetons.
+Étant donné que l’application utilise la bibliothèque Microsoft.Identity.Web, vous n’avez pas besoin d’implémenter de logique de stockage ou d’actualisation de jeton.
 
-L’application utilise le cache de jetons en mémoire, ce qui est suffisant pour les applications qui n’ont pas besoin de faire persister les jetons lors du redémarrage de l’application. Les applications de production peuvent utiliser à la place les [options de cache distribué](https://github.com/AzureAD/microsoft-identity-web/wiki/token-cache-serialization) dans la bibliothèque Microsoft. Identity. Web.
+L’application utilise le cache de jetons en mémoire, ce qui est suffisant pour les applications qui n’ont pas besoin de rendre persistants les jetons au redémarrage de l’application. Les applications de production peuvent utiliser à la place les [options de cache](https://github.com/AzureAD/microsoft-identity-web/wiki/token-cache-serialization) distribué dans la bibliothèque Microsoft.Identity.Web.
 
-La `GetAccessTokenForUserAsync` méthode gère l’expiration du jeton et l’actualisation pour vous. Il vérifie d’abord le jeton mis en cache et, s’il n’a pas expiré, il le renvoie. Si elle a expiré, elle utilise le jeton d’actualisation mis en cache pour en obtenir une nouvelle.
+La `GetAccessTokenForUserAsync` méthode gère l’expiration et l’actualisation des jetons pour vous. Il vérifie d’abord le jeton mis en cache et, s’il n’a pas expiré, il le renvoie. S’il a expiré, il utilise le jeton d’actualisation mis en cache pour en obtenir un nouveau.
 
-Le **GraphServiceClient** que les contrôleurs obtiennent via l’injection de dépendances est préconfiguré avec un fournisseur d’authentification qui s’utilise `GetAccessTokenForUserAsync` pour vous.
+Le **GraphServiceClient que** les contrôleurs obtiennent via l’injection de dépendances sera préconfiguré avec un fournisseur d’authentification qui vous `GetAccessTokenForUserAsync` est utilisé.
